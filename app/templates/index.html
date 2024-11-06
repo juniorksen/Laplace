@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <title>Cálculo de Caudal</title>
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+        <h1 class="text-3xl font-bold mb-6 text-center">Cálculo de Caudal</h1>
+        <form action="{{ url_for('main.calcular_caudal') }}" method="POST">
+            <div class="mb-4">
+                <label for="fecha" class="block text-sm font-medium text-gray-700">Fecha</label>
+                <input type="date" name="fecha" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500">
+            </div>
+            <div class="mb-4">
+                <label for="intensidad" class="block text-sm font-medium text-gray-700">Intensidad de Lluvia (mm/h)</label>
+                <input type="number" name="intensidad" step="0.1" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500">
+            </div>
+            <div class="mb-4">
+                <label for="duracion" class="block text-sm font-medium text-gray-700">Duración (horas)</label>
+                <input type="number" name="duracion" step="0.1" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500">
+            </div>
+            <div class="mb-4">
+                <label for="ancho" class="block text-sm font-medium text-gray-700">Ancho del Río (m)</label>
+                <input type="number" name="ancho" step="0.1" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500">
+            </div>
+            <div class="mb-4">
+                <label for="profundidad" class="block text-sm font-medium text-gray-700">Profundidad del Río (m)</label>
+                <input type="number" name="profundidad" step="0.1" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500">
+            </div>
+            <div class="mb-4">
+                <label for="pendiente" class="block text-sm font-medium text-gray-700">Pendiente (m/m)</label>
+                <input type="number" name="pendiente" step="0.01" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500">
+            </div>
+            <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Calcular</button>
+        </form>
+    </div>
+</body>
+
+</html>

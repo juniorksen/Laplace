@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado del Cálculo de Caudal</title>
+</head>
+
+<body>
+    <h1>Resultado del Cálculo de Caudal</h1>
+
+    <p><strong>Fecha:</strong> {{ fecha }}</p>
+    <p><strong>Caudal Calculado:</strong> {{ caudal }} m³/s</p>
+    <p><strong>Coeficiente de Absorción:</strong> {{ absorcion }}</p>
+    <p><strong>Coeficiente de Drenaje:</strong> {{ drenaje }}</p>
+
+    <h2>Gráfico de Caudal</h2>
+    <img src="{{ graph_path }}" alt="Gráfico de Caudal">
+
+    <h2>Simulación de Inundación</h2>
+    <img src="{{ sim_path }}" alt="Simulación de Inundación">
+
+    <h2>Animación de Inundación</h2>
+    <video controls width="600">
+        <source src="{{ anim_path }}" type="video/mp4">
+        Tu navegador no soporta el elemento de video.
+    </video>
+</body>
+
+</html>
