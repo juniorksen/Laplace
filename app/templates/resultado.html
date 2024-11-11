@@ -18,7 +18,10 @@
 
         <section class="bg-gray-700 rounded-lg p-6 mb-6 shadow-md">
             <h2 class="text-2xl font-semibold text-yellow-400 mb-2">📊 Datos del Caudal</h2>
-            <p class="text-lg font-semibold">Caudal Calculado: <span class="text-yellow-300">{{ caudal }} m³/s</span></p>
+            <p class="text-lg font-semibold"> Laplace para calcular el caudal <span class="text-yellow-300">{{ caudal }} m³/s</span></p>
+            <p class="text-lg font-semibold"> Estimar el caudal acumulado (Saint-Venant): <span class="text-yellow-300"> {{ caudal_saint_venant }} m³/s </span> </p>
+            <p class="text-lg font-semibold"> Calcular el caudal de escorrentía (Engelund-Hansen): <span class="text-yellow-300"> {{ caudal_engelund_hansen }} m³/s </span> </p>
+
             <p class="mt-2 text-gray-300">Absorción: <span class="font-medium">{{ absorcion }}</span></p>
             <p class="text-gray-300">Drenaje: <span class="font-medium">{{ drenaje }}</span></p>
         </section>
@@ -29,6 +32,7 @@
                 <img src="{{ graph_path }}" alt="Gráfico de Caudal" class="max-w-full rounded-lg shadow-lg border-4 border-blue-500 transition-transform duration-300 transform hover:scale-105">
             </div>
         </section>
+
 
         <section class="mb-8">
             <h2 class="text-2xl font-semibold text-blue-300 mb-4">🌧️ Simulación de Inundación</h2>
@@ -56,6 +60,12 @@
                 </video>
             </div>
         </section>
+
+
+
+
+
+
     </div>
 
 </body>

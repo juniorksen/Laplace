@@ -8,35 +8,43 @@
     <title>Cálculo de Caudal</title>
 </head>
 
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-        <h1 class="text-3xl font-bold mb-6 text-center">Cálculo de Caudal</h1>
-        <form action="{{ url_for('main.calcular_caudal') }}" method="POST">
-            <div class="mb-4">
-                <label for="fecha" class="block text-sm font-medium text-gray-700">Fecha</label>
-                <input type="date" name="fecha" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500">
+<body class="bg-gradient-to-r from-blue-50 to-blue-100 min-h-screen flex items-center justify-center">
+    <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg max-w-md w-full border border-gray-200">
+        <h1 class="text-3xl font-extrabold text-center text-gray-800 mb-8"> 🌊 Cálculo de Caudal 🌊 </h1>
+        <form action="{{ url_for('main.calcular_caudal') }}" method="POST" class="space-y-5">
+            <div>
+                <label for="fecha" class="block text-sm font-semibold text-gray-600">Fecha</label>
+                <input type="date" name="fecha" required class="w-full mt-2 p-2.5 border rounded-lg shadow-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-400">
             </div>
-            <div class="mb-4">
-                <label for="intensidad" class="block text-sm font-medium text-gray-700">Intensidad de Lluvia (mm/h)</label>
-                <input type="number" name="intensidad" step="0.1" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500">
+            <div>
+                <label for="intensidad" class="block text-sm font-semibold text-gray-600">Intensidad de Lluvia (mm/h)</label>
+                <input type="number" name="intensidad" step="0.1" required class="w-full mt-2 p-2.5 border rounded-lg shadow-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-400">
             </div>
-            <div class="mb-4">
-                <label for="duracion" class="block text-sm font-medium text-gray-700">Duración (horas)</label>
-                <input type="number" name="duracion" step="0.1" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500">
+            <div>
+                <label for="duracion" class="block text-sm font-semibold text-gray-600">Duración (horas)</label>
+                <input type="number" name="duracion" step="0.1" required class="w-full mt-2 p-2.5 border rounded-lg shadow-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-400">
             </div>
-            <div class="mb-4">
-                <label for="ancho" class="block text-sm font-medium text-gray-700">Ancho del Río (m)</label>
-                <input type="number" name="ancho" step="0.1" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500">
+            <div>
+                <label for="ancho" class="block text-sm font-semibold text-gray-600">Ancho del Río (m)</label>
+                <input type="number" name="ancho" step="0.1" required class="w-full mt-2 p-2.5 border rounded-lg shadow-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-400">
             </div>
-            <div class="mb-4">
-                <label for="profundidad" class="block text-sm font-medium text-gray-700">Profundidad del Río (m)</label>
-                <input type="number" name="profundidad" step="0.1" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500">
+            <div>
+                <label for="profundidad" class="block text-sm font-semibold text-gray-600">Profundidad del Río (m)</label>
+                <input type="number" name="profundidad" step="0.1" required class="w-full mt-2 p-2.5 border rounded-lg shadow-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-400">
             </div>
-            <div class="mb-4">
-                <label for="pendiente" class="block text-sm font-medium text-gray-700">Pendiente (m/m)</label>
-                <input type="number" name="pendiente" step="0.01" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500">
+            <div>
+                <label for="pendiente" class="block text-sm font-semibold text-gray-600">Pendiente (m/m)</label>
+                <input type="number" name="pendiente" step="0.01" required class="w-full mt-2 p-2.5 border rounded-lg shadow-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-400">
             </div>
-            <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Calcular</button>
+
+            <div>
+                <label for="area" class="block text-sm font-semibold text-gray-600">Área de la cuenca (m²):</label>
+                <input type="number" id="area" name="area" required class="w-full mt-2 p-2.5 border rounded-lg shadow-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-400">
+            </div>
+
+            <button type="submit" class="w-full py-3 mt-4 bg-blue-500 text-white font-semibold rounded-lg shadow hover:bg-blue-600 transition-colors">
+                Calcular
+            </button>
         </form>
     </div>
 </body>

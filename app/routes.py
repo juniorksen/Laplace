@@ -22,6 +22,7 @@ def calcular_caudal():
     ancho = float(request.form.get('ancho', 0))
     profundidad = float(request.form.get('profundidad', 0))
     pendiente = float(request.form.get('pendiente', 0))
+    area = float(request.form.get('area', 0))  # Área de la cuenca
 
     # Constantes para el cálculo
     K = 1.2
@@ -30,13 +31,49 @@ def calcular_caudal():
     drenaje = 0.4
 
     caudal = calcular_caudal_laplace(intensidad, duracion, ancho, profundidad, pendiente, K, tau, absorcion, drenaje)
+    caudal_engelund_hansen = calcular_caudal_engelund_hansen(intensidad, duracion, ancho, pendiente, area)
+    caudal_saint_venant = ecuaciones_saint_venant(intensidad, duracion, ancho, profundidad, pendiente)
     graph_path = generar_grafico(intensidad, caudal, duracion)
     sim_path = generar_simulacion_inundacion_video("C:/Users/alfon/arangod/DEM.tif", caudal)
     dem_path = generar_dem_solo("C:/Users/alfon/arangod/DEM.tif")
     anim_path = generar_animacion_inundacion("C:/Users/alfon/arangod/DEM.tif", caudal)
 
-    return redirect(url_for('main.resultado', fecha=fecha, caudal=caudal, graph_path=graph_path,
-                            sim_path=sim_path, dem_path=dem_path, anim_path=anim_path, absorcion=absorcion, drenaje=drenaje))
+    return redirect(url_for('main.resultado', fecha=fecha, caudal=caudal, caudal_engelund_hansen=caudal_engelund_hansen, caudal_saint_venant=caudal_saint_venant,
+                            graph_path=graph_path, sim_path=sim_path, dem_path=dem_path, anim_path=anim_path,
+                            absorcion=absorcion, drenaje=drenaje))
+
+
+
+def calcular_caudal_engelund_hansen(intensidad, duracion, ancho, pendiente, area):
+    # Constante K depende de la cuenca, por ejemplo 0.7 (puede ser ajustada según el área de estudio)
+    K = 0.7  
+    # Convertir intensidad de mm/h a m/s
+    intensidad_m_s = intensidad / 3600
+    # Duración en horas ya está en el formato correcto
+    T = duracion  
+    # Área (A) ya está dada en m²
+    A = area
+    # Pendiente (S) sin unidades
+    S = pendiente
+
+    # Fórmula del modelo Engelund-Hansen
+    caudal = K * intensidad_m_s * A * (S**0.5) * (T**1.5)
+    return caudal
+
+
+
+def ecuaciones_saint_venant(intensidad, duracion, ancho, profundidad, pendiente):
+    # Estimación de la velocidad del flujo superficial basada en la pendiente y la profundidad
+    velocidad = (pendiente**0.5) * (profundidad**0.5)
+    
+    # Cálculo de la acumulación de caudal en un tiempo determinado
+    tiempo_total = np.linspace(0, duracion, 100)
+    acumulacion_caudal = ancho * profundidad * velocidad * np.exp(-intensidad * tiempo_total)
+    
+    return acumulacion_caudal[-1]  # Último valor de acumulación de caudal
+
+
+
 
 def calcular_caudal_laplace(intensidad, duracion, ancho, profundidad, pendiente, K, tau, absorcion, drenaje):
     def f_t(t):
@@ -183,6 +220,10 @@ def generar_animacion_inundacion(dsm_path, caudal):
 def resultado():
     fecha = request.args.get('fecha')
     caudal = request.args.get('caudal')
+    caudal_engelund_hansen = request.args.get('caudal_engelund_hansen')
+    caudal_saint_venant = request.args.get('caudal_saint_venant')
+
+
     graph_path = url_for('static', filename=os.path.basename(request.args.get('graph_path')))
     sim_path = url_for('static', filename=os.path.basename(request.args.get('sim_path')))
     dem_path = url_for('static', filename=os.path.basename(request.args.get('dem_path')))
@@ -190,6 +231,6 @@ def resultado():
     absorcion = request.args.get('absorcion')
     drenaje = request.args.get('drenaje')
 
-    return render_template('resultado.html', fecha=fecha, caudal=caudal, graph_path=graph_path,
+    return render_template('resultado.html', fecha=fecha, caudal=caudal, caudal_engelund_hansen=caudal_engelund_hansen, caudal_saint_venant=caudal_saint_venant, graph_path=graph_path,
                             sim_path=sim_path, dem_path=dem_path, anim_path=anim_path,
                             absorcion=absorcion, drenaje=drenaje)
